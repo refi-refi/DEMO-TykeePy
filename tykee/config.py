@@ -1,6 +1,6 @@
-""" Config file to use environment variables across the project.
-"""
+""" Config file to access environment variables across the project."""
 from os import getenv, path
+
 from dotenv import load_dotenv
 
 load_dotenv()
