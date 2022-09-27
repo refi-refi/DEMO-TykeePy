@@ -19,11 +19,17 @@ def main(
 ):
     """
     Update candles table in the database with the latest candles from MetaTrader.
-    :param update_from: Start date of the update
-    :type update_from: Union[int, str, datetime]
-    :param update_to: End date of the update
-    :type update_to: Union[int, str, datetime]
-    :return: None
+
+    Parameters
+    ----------
+    update_from: Union[int, str, datetime]
+        Start date of the update. Either 'last' or datetime or int expected.
+    update_to: Union[int, str, datetime]
+        End date of the update. Either 'now' or datetime or int expected.
+
+    Returns
+    -------
+    None
     """
     start = datetime.now()
     mt = MetaTrader()
@@ -49,12 +55,23 @@ async def update_symbol_candles(
 ):
     """
     Get candles from MetaTrader and insert candles in the database.
-    :param mt_conn: MetaTrader connection
-    :param db_conn: Database connection
-    :param symbol: Symbol to update
-    :param update_from: Start date of the update
-    :param update_to: End date of the update
-    :return: None
+
+    Parameters
+    ----------
+    mt_conn: MetaTrader
+        MetaTrader connection
+    db_conn: Database
+        Database connection
+    symbol: Symbol
+        Symbol to update
+    update_from: Union[int, datetime]
+        Start datetime or int(index) of the update
+    update_to: Union[int, datetime]
+        End datetime or int(index) of the update
+
+    Returns
+    -------
+    None
     """
     update_from = parse_update_from(update_from, symbol, db_conn)
     update_to = parse_update_to(update_to)
@@ -73,14 +90,19 @@ def parse_update_from(
 ) -> Union[int, datetime]:
     """
     Parse update_from parameter.
-    :param update_from: Start date of the update
-    :type update_from: Union[int, str, datetime]
-    :param symbol: Symbol to update
-    :type symbol: Symbol
-    :param db_conn: Database connection
-    :type db_conn: Database
-    :return: Start date of the update
-    :rtype: Union[int, datetime]
+
+    Parameters
+    ----------
+    update_from: Union[int, str, datetime]
+        Start of the update
+    symbol: Symbol
+        Symbol to update
+    db_conn: Database
+        Database connection
+
+    Returns
+    -------
+    Union[int, datetime]
     """
     if isinstance(update_from, (int, datetime)):
         return update_from
@@ -101,10 +123,15 @@ def parse_update_from(
 def parse_update_to(update_to: Union[int, str, datetime]) -> Union[int, datetime]:
     """
     Parse update_to parameter.
-    :param update_to: Start date of the update
-    :type update_to: Union[int, str, datetime]
-    :return: Start date of the update
-    :rtype: Union[int, datetime]
+
+    Parameters
+    ----------
+    update_to: Union[int, str, datetime]
+        End of the update
+
+    Returns
+    -------
+    Union[int, datetime]
     """
     if isinstance(update_to, (int, datetime)):
         return update_to
@@ -120,10 +147,15 @@ def parse_update_to(update_to: Union[int, str, datetime]) -> Union[int, datetime
 def get_symbols(rest_api_url: str = "http://localhost:8080/symbols"):
     """
     Get symbols from the rest-api.
-    :param rest_api_url: URL of the rest-api
-    :type rest_api_url: str
-    :return: List of Symbols
-    :rtype: List[Symbol]
+
+    Parameters
+    ----------
+    rest_api_url: str
+        Rest-api url
+
+    Returns
+    -------
+    List[Symbol]
     """
     symbols = requests.get(rest_api_url, timeout=3).json()
     symbols = [Symbol.from_str(symbol.get("name")) for symbol in symbols]
