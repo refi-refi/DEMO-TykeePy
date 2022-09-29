@@ -4,9 +4,9 @@ import setuptools
 
 VERSION = "1.0.0"
 NAME = "DEMO-TykeePy"
-DESCRIPTION = "Python package for data analysis and trading."
+DESCRIPTION = "Python package for data analyses and trading."
 LONG_DESCRIPTION = """
-DEMO-TykeePy is open-source version of TykeePy which is Python package for data analysis and trading.
+DEMO-TykeePy is open-source version of TykeePy which is Python package for data analyses and trading.
 """
 
 INSTALL_REQUIRES = [
