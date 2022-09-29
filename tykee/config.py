@@ -10,3 +10,4 @@ DB_URL = getenv("DB_URL")
 
 PROJECT_DIR = path.abspath(path.join(path.dirname(__file__), ".."))
 LOG_DIR = path.join(PROJECT_DIR, "logs")
+DATA_FILES_DIR = path.join(PROJECT_DIR, "tykee", "data", "files")
