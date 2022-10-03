@@ -5,9 +5,10 @@ from tykee.market import Symbol, Period
 def SYMBOL_HISTORY(
     symbol: Symbol, period: Period, date_from: int, date_to: int, schema: str = "rest"
 ) -> str:
-    """Returns historical data for a symbol"""
+    """Returns historical data_frame for a symbol"""
     return f"""
-        SELECT * FROM {schema}.change_period({symbol.index}, {period.index}, {date_from}, {date_to})
+        SET TIME ZONE 'UTC';
+        SELECT * FROM {schema}.change_period({symbol.index}, {period.index}, {date_from}, {date_to});
     """
 
 

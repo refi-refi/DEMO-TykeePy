@@ -1,4 +1,4 @@
-"""Placeholder for different data related transformations"""
+"""Placeholder for different data_frame related transformations"""
 from datetime import datetime
 from typing import Union
 

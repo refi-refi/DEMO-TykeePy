@@ -44,7 +44,7 @@ class MetaTrader:
         int_type: bool = False,
     ):
         """
-        Generator for fetching candlestick data from MetaTrader5 terminal.
+        Generator for fetching candlestick data_frame from MetaTrader5 terminal.
 
         Parameters
         ----------
@@ -57,14 +57,14 @@ class MetaTrader:
         end: 'int', 'datetime'
             Date or int(index) of the last bar.
         int_type: bool
-            Either the returned candlestick data is cast to an int or left as a float.
+            Either the returned candlestick data_frame is cast to an int or left as a float.
         batch_size: int, relativedelta
-            Batch size for fetching candlestick data from MetaTrader5.
+            Batch size for fetching candlestick data_frame from MetaTrader5.
 
         Returns
         ------
         candle_df: pandas.DataFrame
-            Generator for historical candlestick data.
+            Generator for historical candlestick data_frame.
         """
         symbol = symbol if isinstance(symbol, Symbol) else Symbol.from_str(symbol)
         period = period if isinstance(period, Period) else Period.from_str(period)
@@ -130,7 +130,7 @@ class MetaTrader:
         Returns
         -------
         candle_df: pd.DataFrame
-            Historical candlestick data.
+            Historical candlestick data_frame.
         """
         candles = np.array([])
         if self.initialize() and self.symbol_in_market_watch(symbol):
@@ -162,7 +162,7 @@ class MetaTrader:
         config_values = list(self._config.values())
         if all(config_values):
             if not mt.initialize(**self._config):
-                raise TykeeError.mt_init_failed(
+                raise TykeeError.mt_init_error(
                     "Invalid all input init", mt.last_error()
                 )
         elif (
@@ -170,19 +170,17 @@ class MetaTrader:
             and any(config_values[:-1])
             and not all(config_values[:-1])
         ):
-            raise TykeeError.mt_init_failed(
+            raise TykeeError.mt_init_error(
                 "Invalid all input init, missing info", mt.last_error()
             )
         elif self._config["path"]:
             if not mt.initialize(self._config["path"]):
-                raise TykeeError.mt_init_failed(
+                raise TykeeError.mt_init_error(
                     "Invalid terminal path init", mt.last_error()
                 )
         else:
             if not mt.initialize():
-                raise TykeeError.mt_init_failed(
-                    "Invalid no input init", mt.last_error()
-                )
+                raise TykeeError.mt_init_error("Invalid no input init", mt.last_error())
 
         return True
 
@@ -219,7 +217,7 @@ class MetaTrader:
     def fetch_type(start: Union[int, datetime], end: Union[int, datetime]) -> Callable:
         """
         Static method that returns MetaTrader mt5.copy_rates_* function
-        which will be used for fetching candlestick data.
+        which will be used for fetching candlestick data_frame.
 
         Parameters
         ----------
@@ -229,7 +227,7 @@ class MetaTrader:
             Date or index of the last bar.
         Returns
         -------
-        Callable - MetaTrader5 function to copy candlestick data from terminal.
+        Callable - MetaTrader5 function to copy candlestick data_frame from terminal.
         """
         if isinstance(start, int) and isinstance(end, int):
             fetch_function = mt.copy_rates_from_pos

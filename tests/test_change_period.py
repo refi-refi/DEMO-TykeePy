@@ -11,7 +11,7 @@ from tykee.market import Symbol, Period
 
 @pytest.fixture
 def load_data():
-    """Loads data from PostgreSQL using function change_period()"""
+    """Loads data_frame from PostgreSQL using function change_period()"""
     db = Database()
     df = db.get_symbol_history(
         Symbol.EURGBP, Period.M5, "2022-07-01 00:00:00", "2022-07-01 00:30:00"
