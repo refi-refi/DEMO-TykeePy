@@ -1,6 +1,6 @@
 """
 change_period.py
-Files purpose is to hold a sample data for testing purposes.
+Files purpose is to hold a sample data_frame for testing purposes.
 """
 from pandas import DataFrame
 

@@ -4,9 +4,9 @@ import setuptools
 
 VERSION = "1.0.0"
 NAME = "DEMO-TykeePy"
-DESCRIPTION = "Python package for data analyses and trading."
+DESCRIPTION = "Python package for data_frame analyses and trading."
 LONG_DESCRIPTION = """
-DEMO-TykeePy is open-source version of TykeePy which is Python package for data analyses and trading.
+DEMO-TykeePy is open-source version of TykeePy which is Python package for data_frame analyses and trading.
 """
 
 INSTALL_REQUIRES = [
@@ -18,6 +18,8 @@ INSTALL_REQUIRES = [
     "metatrader5==5.0.37",
     "torch==1.12.1",
     "xgboost==1.6.2",
+    "tqdm==4.64.1",
+    "tensorboard==2.10.1",
 ]
 
 setuptools.setup(
